@@ -1,0 +1,9 @@
+﻿  chao.cpp
+  Game.cpp
+C:\Users\allan\source\repos\minhoca-game\minhoca-game\Game.cpp(7,23): warning C4305: 'argumento': truncamento de 'double' para 'float'
+  main.cpp
+  SdlInterfaceImpl.cpp
+  Gerando Código...
+  minhoca-game.vcxproj -> C:\Users\allan\source\repos\minhoca-game\x64\Debug\minhoca-game.exe
+  'pwsh.exe' não é reconhecido como um comando interno
+  ou externo, um programa operável ou um arquivo em lotes.
