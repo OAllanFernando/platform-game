@@ -1,9 +1,8 @@
-// Game.cpp
 #include "Game.hpp"
 #include "SdlInterfaceImpl.hpp"
 
 Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
-    : isRunning(false), window(nullptr), renderer(nullptr) {
+    : isRunning(false), interfaceGrafica(new SdlInterfaceImpl()) {  // Alteração: inicializar com implementação SDL
     b2Vec2 gravity(0, 0.10);
     world = new b2World(gravity);
 
@@ -12,19 +11,19 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
         flags = SDL_WINDOW_FULLSCREEN;
     }
 
-    window = interfaceGrafica.criaJanela(title, xpos, ypos, width, height, flags);
-    renderer = interfaceGrafica.criaRenderer(window, -1, 0);
+    interfaceGrafica->criaJanela(title, xpos, ypos, width, height, flags);
+    interfaceGrafica->criaRenderer(-1, 0);
 
-    if (window && renderer) {
-        interfaceGrafica.defineCor(renderer, 10, 0, 0, 100);
+    if (interfaceGrafica->janelaValida() && interfaceGrafica->rendererValido()) {
+        interfaceGrafica->defineCor(10, 0, 0, 100);
         isRunning = true;
     }
     else {
         isRunning = false;
     }
 
-    chao = new Chao(world, renderer, 400.0f, 500.0f, 400.0f, 100.0f);
-    jogador = new Jogador(world, &interfaceGrafica, 200.0f, 300.0f);
+    chao = new Chao(world, interfaceGrafica, 0.0f, 500.0f, width, 100.0f);
+    jogador = new Jogador(world, interfaceGrafica, 100.0f, 440.0f);  // Alteração: passar interface gráfica para jogador
 }
 
 Game::~Game() {
@@ -32,24 +31,30 @@ Game::~Game() {
     delete chao;
     delete world;
 
-    interfaceGrafica.destroiRenderer(renderer);
-    interfaceGrafica.destroiJanela(window);
+    interfaceGrafica->destroiRenderer();
+    interfaceGrafica->destroiJanela();
+
     SDL_Quit();
+
+    delete interfaceGrafica;  // Alteração: liberar memória da interface gráfica
 }
 
 void Game::handleEvents() {
-    SDL_Event event;
-    SDL_PollEvent(&event);
-
-    switch (event.type) {
-    case SDL_QUIT:
-        isRunning = false;
-        break;
-    case SDL_KEYDOWN:
-        jogador->tecla(event);
-        break;
-    default:
-        break;
+    Key key = Key::NONE;
+    while (interfaceGrafica->pollEvent(key)) {
+        switch (key) {
+        case Key::QUIT:
+            isRunning = false;
+            break;
+        case Key::UP:
+        case Key::DOWN:
+        case Key::LEFT:
+        case Key::RIGHT:
+            jogador->tecla(key);
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -58,13 +63,13 @@ void Game::update() {
 }
 
 void Game::render() {
-    interfaceGrafica.defineCor(renderer, 0, 0, 100, 255);
-    interfaceGrafica.limpaRenderer(renderer);
+    interfaceGrafica->defineCor(0, 0, 100, 255);
+    interfaceGrafica->limpaRenderer();
 
-    interfaceGrafica.defineCor(renderer, 10, 100, 50, 255);
+    interfaceGrafica->defineCor(10, 100, 50, 255);
     chao->render();
 
     jogador->render();
 
-    interfaceGrafica.renderPresent(renderer);
+    interfaceGrafica->renderPresent();
 }

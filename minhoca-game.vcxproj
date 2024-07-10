@@ -147,6 +147,7 @@
     <ClInclude Include="corpo.hpp" />
     <ClInclude Include="SdlInterfaceImpl.hpp" />
     <ClInclude Include="jogador.hpp" />
+    <ClInclude Include="teclas.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

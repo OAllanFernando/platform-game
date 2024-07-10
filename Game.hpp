@@ -1,10 +1,9 @@
-// Game.hpp
 #pragma once
-#include <SDL.h>
 #include <Box2D/Box2D.h>
 #include "Chao.hpp"
 #include "Jogador.hpp"
-#include "SdlInterfaceImpl.hpp" // Inclua a implementação do SDL usando a interface
+#include "Interface.hpp"  // Alteração: usar a interface gráfica genérica
+#include "Teclas.hpp"
 
 class Game {
 public:
@@ -18,10 +17,9 @@ public:
 
 private:
     bool isRunning;
-    SDL_Window* window;
-    SDL_Renderer* renderer;
+    Interface* interfaceGrafica;  // Alteração: usar a interface gráfica genérica
     b2World* world;
+
     Chao* chao;
     Jogador* jogador;
-    SdlInterfaceImpl interfaceGrafica;
 };

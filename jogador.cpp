@@ -18,26 +18,28 @@ Jogador::Jogador(b2World* world, Interface* interface, float x, float y)
     m_jogadorCorpo->CreateFixture(&fixtureDef);
 }
 
-void Jogador::tecla(SDL_Event& event) {
-    std::cout << "clicado" << std::endl;
-    if (event.type == SDL_KEYDOWN) {
-        switch (event.key.keysym.sym) {
-        case SDLK_UP:
-            setY(getY() - 100);
-            break;
-        case SDLK_DOWN:
-            setY(getY() + 30);
-            break;
-        case SDLK_LEFT:
-            setX(getX() - 30);
-            break;
-        case SDLK_RIGHT:
-            setX(getX() + 30);
-            break;
-        default:
-            break;
-        }
+void Jogador::tecla(Key key) {
+    b2Vec2 velocity = m_jogadorCorpo->GetLinearVelocity();
+    float speed = 5.0f; // Velocidade do jogador
+
+    switch (key) {
+    case Key::UP:
+        velocity.y = -speed;
+        break;
+    case Key::DOWN:
+        velocity.y = speed;
+        break;
+    case Key::LEFT:
+        velocity.x = -speed;
+        break;
+    case Key::RIGHT:
+        velocity.x = speed;
+        break;
+    default:
+        break;
     }
+
+    m_jogadorCorpo->SetLinearVelocity(velocity);
 }
 
 void Jogador::render() {

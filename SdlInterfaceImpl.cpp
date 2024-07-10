@@ -1,51 +1,57 @@
-// SdlInterfaceImpl.cpp
 #include "SdlInterfaceImpl.hpp"
-#include <iostream>
-SdlInterfaceImpl::SdlInterfaceImpl() : janela(nullptr), renderizador(nullptr) {
 
-}
+SdlInterfaceImpl::SdlInterfaceImpl() : janela(nullptr), renderizador(nullptr) {}
 
-SDL_Window* SdlInterfaceImpl::criaJanela(const char* title, int x, int y, int w, int h, Uint32 flags) {
-    std::cout << "pasoooooooooooooo: " << std::endl;
+
+
+// sdl para renderização da janela
+
+void SdlInterfaceImpl::criaJanela(const char* title, int x, int y, int w, int h, Uint32 flags) {
     janela = SDL_CreateWindow(title, x, y, w, h, flags);
-    return janela;
 }
 
-void SdlInterfaceImpl::destroiJanela(SDL_Window* window) {
-    if (window != nullptr) {
-        SDL_DestroyWindow(window);
+void SdlInterfaceImpl::destroiJanela() {
+    if (janela) {
+        SDL_DestroyWindow(janela);
         janela = nullptr;
     }
 }
 
-SDL_Renderer* SdlInterfaceImpl::criaRenderer(SDL_Window* window, int index, Uint32 flags) {
-    if (window != nullptr) {
-        renderizador = SDL_CreateRenderer(window, index, flags);
-    }
-    return renderizador;
+void SdlInterfaceImpl::criaRenderer(int index, Uint32 flags) {
+    renderizador = SDL_CreateRenderer(janela, index, flags);
 }
 
-void SdlInterfaceImpl::destroiRenderer(SDL_Renderer* renderer) {
-    if (renderer != nullptr) {
-        SDL_DestroyRenderer(renderer);
+void SdlInterfaceImpl::destroiRenderer() {
+    if (renderizador) {
+        SDL_DestroyRenderer(renderizador);
         renderizador = nullptr;
     }
 }
 
-void SdlInterfaceImpl::defineCor(SDL_Renderer* renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
-    SDL_SetRenderDrawColor(renderer, r, g, b, a);
+void SdlInterfaceImpl::defineCor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    SDL_SetRenderDrawColor(renderizador, r, g, b, a);
 }
 
-void SdlInterfaceImpl::limpaRenderer(SDL_Renderer* renderer) {
-    SDL_RenderClear(renderer);
+void SdlInterfaceImpl::limpaRenderer() {
+    SDL_RenderClear(renderizador);
 }
 
-void SdlInterfaceImpl::renderPresent(SDL_Renderer* renderer) {
-    SDL_RenderPresent(renderer);
+void SdlInterfaceImpl::renderPresent() {
+    SDL_RenderPresent(renderizador);
+} 
+
+bool SdlInterfaceImpl::janelaValida() {
+    return janela != nullptr;
+}
+
+bool SdlInterfaceImpl::rendererValido() {
+    return renderizador != nullptr;
 }
 
 
-void SdlInterfaceImpl::criaJogador(b2World* world, SDL_Renderer* renderer, float x, float y) {
+// jogador
+
+void SdlInterfaceImpl::criaJogador(b2World* world, float x, float y) {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(x, y);
@@ -68,10 +74,7 @@ void SdlInterfaceImpl::destroiJogador() {
 }
 
 void SdlInterfaceImpl::renderJogador(float x, float y) {
-    std::cout << "jogadorPosicao:  " << x << std::endl;
-
-        std::cout << "jogadorPffffffffffffosicao: " << std::endl;
-      
+       
         float jogadorWidth = 10.0f; // Supondo que seja 2 metros
         float jogadorHeight = 10.0f; // Supondo que seja 2 metros
 
@@ -84,4 +87,95 @@ void SdlInterfaceImpl::renderJogador(float x, float y) {
 
         SDL_Rect jogadorRect = { jogadorX, jogadorY, jogadorWidthPixels, jogadorHeightPixels };
         SDL_RenderFillRect(renderizador, &jogadorRect);
+}
+
+
+// renderizadores do chao
+
+void SdlInterfaceImpl::criaChao(b2World* world, float x, float y, float w, float h) {
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_staticBody;
+	bodyDef.position.Set(x, y);
+    chaoCorpo = world->CreateBody(&bodyDef);
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(w, h);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1;
+	fixtureDef.friction = 0.3f;
+    chaoCorpo->CreateFixture(&fixtureDef);
+}
+
+void SdlInterfaceImpl::destroiChao() {
+	if (chaoCorpo != nullptr) {
+		chaoCorpo->GetWorld()->DestroyBody(chaoCorpo);
+		chaoCorpo = nullptr;
+	}
+}
+
+void SdlInterfaceImpl::renderChao(float x, float y, float w, float h) {
+	// Calcula as coordenadas de renderização (convertendo metros para pixels)
+	int chaoX = static_cast<int>(x);
+	int chaoY = static_cast<int>(y);
+	int chaoWidthPixels = static_cast<int>(w);
+	int chaoHeightPixels = static_cast<int>(h);
+
+	SDL_Rect chaoRect = { chaoX, chaoY, chaoWidthPixels, chaoHeightPixels };
+	SDL_RenderFillRect(renderizador, &chaoRect);
+}
+
+
+void SdlInterfaceImpl::moveJogadorFrente() {
+    if (jogadorCorpo != nullptr) {
+		b2Vec2 vel = jogadorCorpo->GetLinearVelocity();
+		vel.x = 1000;
+		jogadorCorpo->SetLinearVelocity(vel);
+	}
+}
+
+void SdlInterfaceImpl::moveJogadorTras() {
+    if (jogadorCorpo != nullptr) {
+		b2Vec2 vel = jogadorCorpo->GetLinearVelocity();
+		vel.x = -10;
+		jogadorCorpo->SetLinearVelocity(vel);
+	}
+}
+
+void SdlInterfaceImpl::moveJogadorPulo() {
+    if (jogadorCorpo != nullptr) {
+		b2Vec2 vel = jogadorCorpo->GetLinearVelocity();
+		vel.y = -10;
+		jogadorCorpo->SetLinearVelocity(vel);
+	}
+}
+
+//eventos+teclas
+bool SdlInterfaceImpl::pollEvent(Key& key) {
+    SDL_Event event;
+    if (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) {
+            key = Key::QUIT;
+        }
+        else if (event.type == SDL_KEYDOWN) {
+            switch (event.key.keysym.sym) {
+            case SDLK_UP:
+                key = Key::UP;
+                break;
+            case SDLK_DOWN:
+                key = Key::DOWN;
+                break;
+            case SDLK_LEFT:
+                key = Key::LEFT;
+                break;
+            case SDLK_RIGHT:
+                key = Key::RIGHT;
+                break;
+            default:
+                key = Key::NONE;
+                break;
+            }
+        }
+        return true;
+    }
+    return false;
 }
