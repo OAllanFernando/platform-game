@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "SdlInterfaceImpl.hpp"
+#include <iostream>
 
 Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
     : isRunning(false), interfaceGrafica(new SdlInterfaceImpl()) {  // Alteração: inicializar com implementação SDL
@@ -24,6 +25,10 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
     chao = new Chao(world, interfaceGrafica, 0.0f, 500.0f, width, 100.0f);
     jogador = new Jogador(world, interfaceGrafica, 100.0f, 440.0f);  // Alteração: passar interface gráfica para jogador
+    
+    //jogador->setPontos(10);
+    //print de teste
+    std::cout << "Game::Game() - Game criado " << jogador->getPontos() << std::endl;
 }
 
 Game::~Game() {
@@ -40,13 +45,16 @@ Game::~Game() {
 }
 
 void Game::handleEvents() {
+    // vamos validar quando receber um evento para up para só pular se relar no chao
+    
+
     Key key = Key::NONE;
     while (interfaceGrafica->pollEvent(key)) {
         switch (key) {
         case Key::QUIT:
             isRunning = false;
             break;
-        case Key::UP:
+        case Key::UP :
         case Key::DOWN:
         case Key::LEFT:
         case Key::RIGHT:
@@ -72,4 +80,12 @@ void Game::render() {
     jogador->render();
 
     interfaceGrafica->renderPresent();
+}
+
+
+static bool tocaChao(b2Body* jogadorCorpo, b2Body* chaoCorpo) {
+	b2AABB aabbJogador = jogadorCorpo->GetFixtureList()->GetAABB(0);
+	b2AABB aabbChao = chaoCorpo->GetFixtureList()->GetAABB(0);
+
+	return aabbJogador.lowerBound.y <= aabbChao.upperBound.y;
 }

@@ -14,8 +14,6 @@ Chao::Chao(b2World* world, Interface* interface, float x, float y, float width, 
     b2FixtureDef myFixtureDef;
     myFixtureDef.shape = &groundBox;
 
-
-    //add four walls to the static body
     groundBox.SetAsBox(width, 1, b2Vec2(0, 0), 0);//ground
     m_chaoCorpo->CreateFixture(&myFixtureDef);
     std::cout << "Posição do chão: (" << m_chaoCorpo->GetPosition().x << ", " << m_chaoCorpo->GetPosition().y << ")" << std::endl;

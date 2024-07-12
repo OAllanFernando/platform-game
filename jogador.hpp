@@ -3,14 +3,16 @@
 #include "Interface.hpp"
 #include <Box2D/Box2D.h>
 #include "Teclas.hpp"
+#include "Corpo.hpp"
 
-class Jogador {
+class Jogador : public Corpo {
 public:
     Jogador(b2World* world, Interface* interface, float x, float y);
 
     void tecla(Key key);
     void render();
 
+    
 
 private:
     b2World* m_world;
@@ -20,4 +22,5 @@ private:
     void setY(float y);
     float getX();
     float getY();
+
 };

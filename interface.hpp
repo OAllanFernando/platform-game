@@ -20,9 +20,6 @@ public:
     // jogador
     virtual void criaJogador(b2World* world, float x, float y) = 0;
     virtual void destroiJogador() = 0;
-    virtual void moveJogadorFrente() = 0;
-    virtual void moveJogadorTras() = 0;
-    virtual void moveJogadorPulo() = 0;
     virtual void renderJogador(float x, float y) = 0;
 
     // chao
@@ -33,6 +30,7 @@ public:
     // eventos
     virtual bool pollEvent(Key& key) = 0;
     
+
 };
 
 #endif

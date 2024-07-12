@@ -135,6 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="chao.cpp" />
+    <ClCompile Include="contactListener.cpp" />
+    <ClCompile Include="contactListener.hpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="jogador.cpp" />

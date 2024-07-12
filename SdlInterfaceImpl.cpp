@@ -1,4 +1,5 @@
 #include "SdlInterfaceImpl.hpp"
+#include <iostream>
 
 SdlInterfaceImpl::SdlInterfaceImpl() : janela(nullptr), renderizador(nullptr) {}
 
@@ -90,6 +91,8 @@ void SdlInterfaceImpl::renderJogador(float x, float y) {
 }
 
 
+
+
 // renderizadores do chao
 
 void SdlInterfaceImpl::criaChao(b2World* world, float x, float y, float w, float h) {
@@ -124,30 +127,6 @@ void SdlInterfaceImpl::renderChao(float x, float y, float w, float h) {
 	SDL_RenderFillRect(renderizador, &chaoRect);
 }
 
-
-void SdlInterfaceImpl::moveJogadorFrente() {
-    if (jogadorCorpo != nullptr) {
-		b2Vec2 vel = jogadorCorpo->GetLinearVelocity();
-		vel.x = 1000;
-		jogadorCorpo->SetLinearVelocity(vel);
-	}
-}
-
-void SdlInterfaceImpl::moveJogadorTras() {
-    if (jogadorCorpo != nullptr) {
-		b2Vec2 vel = jogadorCorpo->GetLinearVelocity();
-		vel.x = -10;
-		jogadorCorpo->SetLinearVelocity(vel);
-	}
-}
-
-void SdlInterfaceImpl::moveJogadorPulo() {
-    if (jogadorCorpo != nullptr) {
-		b2Vec2 vel = jogadorCorpo->GetLinearVelocity();
-		vel.y = -10;
-		jogadorCorpo->SetLinearVelocity(vel);
-	}
-}
 
 //eventos+teclas
 bool SdlInterfaceImpl::pollEvent(Key& key) {

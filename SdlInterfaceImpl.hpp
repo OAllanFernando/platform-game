@@ -20,9 +20,8 @@ public:
     void criaJogador(b2World* world, float x, float y) override;
     void destroiJogador() override;
     void renderJogador(float x, float y) override;
-    void moveJogadorFrente() override;
-    void moveJogadorTras() override;
-    void moveJogadorPulo() override;
+   // bool colisaoChao(float x, float y) override;
+
 
     // chao
     void criaChao(b2World* world, float x, float y, float w, float h) override;

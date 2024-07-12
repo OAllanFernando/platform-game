@@ -1,4 +1,7 @@
-﻿  jogador.cpp
+﻿  contactListener.cpp
+  contactListener.hpp
+  Gerando Código...
+x64\Debug\contactListener.obj : warning LNK4042: objeto especificado mais de uma vez; extras ignorados
   minhoca-game.vcxproj -> C:\Users\allan\source\repos\minhoca-game\x64\Debug\minhoca-game.exe
   'pwsh.exe' não é reconhecido como um comando interno
   ou externo, um programa operável ou um arquivo em lotes.
