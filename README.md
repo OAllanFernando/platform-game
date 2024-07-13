@@ -27,4 +27,16 @@ Saida:
 
 Jogador agora controlado pelo teclado feito de maneira desaclopada
 
+=======================
+Aula 12/07/2024 - Hélio 22:43
+
+Entrada:
+
+Quero fazer com que o usuario de somente um pulo. Então preciso identificar se meu jogador está relando no chão.
+
+Saída:
+
+Conseguii!! nos ultimos 20 min de aula. E também como solicitado pelo professor helio alterei meu projeto para hexagonal! 
+
+
 
