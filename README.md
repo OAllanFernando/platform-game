@@ -38,5 +38,26 @@ Saída:
 
 Conseguii!! nos ultimos 20 min de aula. E também como solicitado pelo professor helio alterei meu projeto para hexagonal! 
 
+========================
+Aula 17/07/2024 - Eduardo 
+
+Entrada:
+
+Quero iniciar o desenvoilvimento de moedas para que sejam capturadas pelo meu jogador
+
+Saída:
+
+Parte da lógica implementada, mas ainda falta o usuario captura-la e somar os pontos a seus pontos
+
+==========================
+Aula 19/07/2024 - Hélio
+
+Entrada: 
+
+Continuei os estudos da arquitetura hexagonal e pretendo validar o que já tenho pronto está em conformidade com o paradigma
+
+Saída:
+
+
 
 
