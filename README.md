@@ -58,6 +58,6 @@ Continuei os estudos da arquitetura hexagonal e pretendo validar o que já tenho
 
 Saída:
 
-
+Validado a estrutura para hexagonal, e moedas funcionandoo!!!!
 
 
