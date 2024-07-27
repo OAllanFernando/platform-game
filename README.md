@@ -60,4 +60,32 @@ Saída:
 
 Validado a estrutura para hexagonal, e moedas funcionandoo!!!!
 
+===========================
+
+Aula 24/07/2024 - Eduardo
+
+Entrada: Aula avaliação
+
+Vou mostrar o projeto e espero corresponder as Expectativas.
+
+Saída:
+O projeto foi elogiado, apontado melhorias. 
+Corrigi os apontamentos mas não tempo de mostrar ao professor.
+
+==========================
+
+Aula 26/07/2024 - Hélio
+
+Entrada: Aula avaliação
+
+Vou mostrar o projeto e espero corresponder as Expectativas.
+
+Saída:
+
+Apontado melhorias quanto a arquitetura mas foi uma avaliação positiva.
+
+=======================
+
+
+
 
