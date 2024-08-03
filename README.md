@@ -86,6 +86,20 @@ Apontado melhorias quanto a arquitetura mas foi uma avaliação positiva.
 
 =======================
 
+Aula 31/07/2024 - Eduardo
+
+Faltei
+
+
+========================
+
+Aula 02/08/2024 - Helio 
+
+Entrada: Avaliar o que está pronto e pensar na tecnica de bater asa e planar
+
+Saida: O jogador bate asa 3 vezes até descansar em uma superficie e planar ainda não está bom 
+
+
 
 
 
